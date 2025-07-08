@@ -6,16 +6,18 @@
   <default>
     <default class="ur5e">
       <material specular="0.5" shininess="0.25"/>
-      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/>
-      <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="3000" biasprm="0 -3000 -600" forcerange="-150 150"/>
+      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1" damping="200"/>
+      <position  ctrllimited="true" forcelimited="true"  ctrlrange="-6.2831 6.2831" forcerange="-150 150"/> <!-- gaintype="fixed" biastype="affine"  gainprm="4500" biasprm="0 -4500 -600" -->
       <default class="size3">
+        <joint armature="0.1"  damping="200"/>
         <default class="size3_limited">
-          <joint range="-3.1415 3.1415"/>
-          <general ctrlrange="-3.1415 3.1415"/>
+          <joint range="-3.1415 3.1415" />
+          <position  ctrllimited="true"  ctrlrange="-3.1415 3.1415"/>
         </default>
       </default>
       <default class="size1">
-        <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28"/>
+        <joint armature="0.1"  damping="15"/>
+        <position forcelimited="true" forcerange="-28 28"/>  <!--  gainprm="3000" biasprm="0 -3000 -100"-->
       </default>
       <default class="ur5e:visual">
         <geom type="mesh" contype="0" conaffinity="0" group="2"/>
@@ -31,16 +33,16 @@
     <!-- robotiq_gripper -->
     <default class="2f85">
       <mesh scale="0.001 0.001 0.001"/>
-      <!-- <general ctrllimited="true" forcelimited="true" biastype="none"/> -->
+      <general biastype="affine"/>
       <joint axis="1 0 0" limited="false"/>
       <default class="robotiq_85_outter_knuckle_link">
-        <joint limited="true" range="0 0.834" solimplimit="0.95 0.99 0.001" solreflimit="0.005 1" armature="0.005" damping="0.1" />
+        <joint limited="true" range="0 0.834" solimplimit="0.95 0.99 0.001" solreflimit="0.005 1" armature="0.005" damping="40" />
       </default>
       <default class="robotiq_85_finger_tip_link">
         <joint limited="true" armature="0.001" range="-0.872664 0.872664" pos="0 -0.018 0.0065" solimplimit="0.95 0.99 0.001" solreflimit="0.005 1"/>
       </default>
       <default class="robotiq_85_inner_knuckle_link">
-        <joint limited="true" armature="0.001" range="-0.29670597283 0.8" stiffness="0.05" springref="2.62" damping="0.00125"/>
+        <joint limited="true" armature="0.001" range="-0.29670597283 0.8" stiffness="0.05" springref="2.62" damping="0.1025"/>
       </default>
       <default class="robotiq_85_finger_link">
         <joint limited="true" armature="0.001" range="-1.57 0" solimplimit="0.95 0.99 0.001" solreflimit="0.005 1"/>
@@ -321,8 +323,9 @@
     kp = 100. Tau = Kp * scale * control_input - Kp * error, max(Kp * scale * control_input) = 0.8,
     hence scale = 0.8 * 100 / 255
   -->
-    <general class="2f85" name="robotiq_85_left_knuckle_joint" tendon="split" forcerange="-10 10" />
+    <!-- <general class="2f85" name="robotiq_85_left_knuckle_joint" tendon="split" forcerange="-10 10" /> -->
     <!-- ctrlrange="0 255" gainprm="0 0 0" biasprm="0 0 0" -->
+     <position joint="robotiq_85_left_knuckle_joint" kp="10" kv="1" ctrlrange="0 0.8"/>
   </actuator>
 
   <!-- <keyframe>
