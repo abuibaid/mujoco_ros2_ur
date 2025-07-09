@@ -323,9 +323,9 @@
     kp = 100. Tau = Kp * scale * control_input - Kp * error, max(Kp * scale * control_input) = 0.8,
     hence scale = 0.8 * 100 / 255
   -->
-    <!-- <general class="2f85" name="robotiq_85_left_knuckle_joint" tendon="split" forcerange="-10 10" /> -->
-    <!-- ctrlrange="0 255" gainprm="0 0 0" biasprm="0 0 0" -->
-     <position joint="robotiq_85_left_knuckle_joint" kp="10" kv="1" ctrlrange="0 0.8"/>
+    <general class="2f85" name="robotiq_85_left_knuckle_joint" tendon="split" forcerange="-10 10"  ctrlrange="0 255" gainprm="0 0 0" biasprm="0 0 0" /> 
+    <!-- -->
+     <!--<position joint="robotiq_85_left_knuckle_joint" kp="10" kv="1" ctrlrange="0 0.8"/> -->
   </actuator>
 
   <!-- <keyframe>
