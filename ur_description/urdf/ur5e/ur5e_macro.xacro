@@ -46,7 +46,7 @@
     <link name="${tf_prefix}base_link">
       <visual>
         <geometry>
-          <mesh filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/visual/base.dae" />
+          <mesh filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/visual/base.dae" />
         </geometry>
         <material name="LightGrey">
           <color rgba="0.7 0.7 0.7 1.0" />
@@ -55,7 +55,7 @@
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/collision/meshes/base_vis.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/collision/meshes/base_vis.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -75,7 +75,7 @@
     <link name="${tf_prefix}shoulder_link">
       <visual>
         <geometry>
-          <mesh filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/visual/shoulder.dae" />
+          <mesh filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/visual/shoulder.dae" />
         </geometry>
         <material name="LightGrey">
           <color rgba="0.7 0.7 0.7 1.0" />
@@ -84,7 +84,7 @@
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/collision/meshes/shoulder_vis.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/collision/meshes/shoulder_vis.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -106,7 +106,7 @@
     <link name="${tf_prefix}upper_arm_link">
       <visual>
         <geometry>
-          <mesh filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/visual/upperarm.dae" />
+          <mesh filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/visual/upperarm.dae" />
         </geometry>
         <material name="LightGrey">
           <color rgba="0.7 0.7 0.7 1.0" />
@@ -115,7 +115,7 @@
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/collision/meshes/upperarm_vis.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/collision/meshes/upperarm_vis.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -136,7 +136,7 @@
     <link name="${tf_prefix}forearm_link">
       <visual>
         <geometry>
-          <mesh filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/visual/forearm.dae" />
+          <mesh filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/visual/forearm.dae" />
         </geometry>
         <material name="LightGrey">
           <color rgba="0.7 0.7 0.7 1.0" />
@@ -145,7 +145,7 @@
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/collision/meshes/forearm_vis.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/collision/meshes/forearm_vis.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -168,7 +168,7 @@
     <link name="${tf_prefix}wrist_1_link">
       <visual>
         <geometry>
-          <mesh filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/visual/wrist1.dae" />
+          <mesh filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/visual/wrist1.dae" />
         </geometry>
         <material name="LightGrey">
           <color rgba="0.7 0.7 0.7 1.0" />
@@ -177,7 +177,7 @@
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/collision/meshes/wrist1_vis.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/collision/meshes/wrist1_vis.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -199,7 +199,7 @@
     <link name="${tf_prefix}wrist_2_link">
       <visual>
         <geometry>
-          <mesh filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/visual/wrist2.dae" />
+          <mesh filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/visual/wrist2.dae" />
         </geometry>
         <material name="LightGrey">
           <color rgba="0.7 0.7 0.7 1.0" />
@@ -208,7 +208,7 @@
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/collision/meshes/wrist2_vis.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/collision/meshes/wrist2_vis.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -230,7 +230,7 @@
     <link name="${tf_prefix}wrist_3_link">
       <visual>
         <geometry>
-          <mesh filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/visual/wrist3.dae" />
+          <mesh filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/visual/wrist3.dae" />
         </geometry>
         <material name="LightGrey">
           <color rgba="0.7 0.7 0.7 1.0" />
@@ -239,7 +239,7 @@
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/collision/meshes/wrist3_vis.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/collision/meshes/wrist3_vis.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -348,13 +348,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_base_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_base_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_base_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_base_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -387,13 +387,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_knuckle_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_knuckle_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_knuckle_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_knuckle_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -409,13 +409,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_knuckle_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_knuckle_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_knuckle_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_knuckle_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -443,13 +443,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_finger_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_finger_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -465,13 +465,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_finger_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_finger_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -505,13 +505,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_inner_knuckle_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_inner_knuckle_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_inner_knuckle_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_inner_knuckle_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -527,13 +527,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_inner_knuckle_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_inner_knuckle_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_inner_knuckle_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_inner_knuckle_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -570,13 +570,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_tip_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_tip_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_finger_tip_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_finger_tip_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -592,13 +592,13 @@
       <visual>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_tip_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_tip_link.dae" />
         </geometry>
       </visual>
       <collision>
         <geometry>
           <mesh
-            filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_finger_tip_link.stl" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/collision/robotiq_85_finger_tip_link.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -625,7 +625,7 @@
     <!-- <link name="peg">
     <collision>
       <geometry>
-        <mesh filename="$(find mujoco_ros2_ur)/ur_description/meshes/ur5e/collision/meshes/peg.stl"/>
+        <mesh filename="package://mujoco_ros2_ur/ur_description/meshes/ur5e/collision/meshes/peg.stl"/>
       </geometry>
     </collision>
     <inertial>
