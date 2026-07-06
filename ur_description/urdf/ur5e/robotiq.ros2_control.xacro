@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <xacro:macro name="robotiq_command_joint" params="tf_prefix">
+    <joint name="${tf_prefix}robotiq_85_left_knuckle_joint">
+      <param name="position_kp">120</param>
+      <param name="position_ki">0</param>
+      <param name="position_kd">0.1</param>
+      <param name="position_i_max">1</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </xacro:macro>
+      
   <xacro:macro name="robotiq_ros2_control"
-    params="name initial_positions_file ros2_control_hardware_type tf_prefix using_position_pid:=false">
+    params="name initial_positions_file ros2_control_hardware_type tf_prefix mujoco_model:='' using_position_pid:=false">
     <xacro:property name="initial_positions"
       value="${xacro.load_yaml(initial_positions_file)['initial_positions']}" />
 
@@ -17,81 +30,158 @@
           <param name="joint_states_topic">/isaac_joint_states</param>
         </xacro:if>
         <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
-          <plugin>mujoco_ros2_control/MujocoSystem</plugin>
+          <plugin>mujoco_ros2_control/MujocoSystemInterface</plugin>
+          <param name="mujoco_model">${mujoco_model}</param>
         </xacro:if>
       </hardware>
 
 
       <xacro:macro name="configure_joint" params="joint_name mimicing_joint multiplier">
         <joint name="${joint_name}">
-          <!-- Set PID or position interface depending on configuration -->
-          <!-- <param name="mimic">${mimicing_joint}</param>
+          <param name="mimic">${mimicing_joint}</param>
           <param name="multiplier">${multiplier}</param>
-          <xacro:if value="${using_position_pid}">
+          <!-- <xacro:unless value="${ros2_control_hardware_type == 'mujoco'}">
             <param name="position_kp">120</param>
-            <param name="position_ki">0</param>
+            <param name="position_ki">0.1</param>
             <param name="position_kd">0.1</param>
-            <param name="position_i_max">1</param>
+            <param name="position_i_max">10</param>
             <command_interface name="position_pid" />
-          </xacro:if>
-          <xacro:unless value="${using_position_pid}">
-            <xacro:unless value="${ros2_control_hardware_type == 'mujoco'}">
-              <command_interface name="position" />
-            </xacro:unless>
-            <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
-              <param name="position_kp">3000</param>
-              <param name="position_ki">1</param>
-              <param name="position_kd">100</param>
-              <param name="position_i_max">10000</param>
-              <command_interface name="position_pid" />
-            </xacro:if>
           </xacro:unless> -->
-          
-
-           <param name="mimic">${mimicing_joint}</param>
-          <param name="multiplier">${multiplier}</param>
-          <xacro:if value="${using_position_pid}">
-            <param name="position_kp">120</param>
-            <param name="position_ki">0.0</param>
-            <param name="position_kd">0.1</param>
-            <param name="position_i_max">1</param>
-            <command_interface name="position_pid" />
-          </xacro:if>
-          <xacro:unless value="${using_position_pid}">
+          <!-- <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
             <command_interface name="position" />
-          </xacro:unless>
-          <state_interface name="position"/>
-          <state_interface name="velocity"/>
+          </xacro:if> -->
+          <state_interface name="position">
+            <!-- <param name="initial_value">0.0</param> -->
+          </state_interface>
+          <state_interface name="velocity">
+            <!-- <param name="initial_value">0.0</param> -->
+          </state_interface>
           <state_interface name="effort"/>
-
         </joint>
       </xacro:macro>
 
-      <joint name="${tf_prefix}robotiq_85_left_knuckle_joint">
-        <param name="position_kp">120</param>
-        <param name="position_ki">0</param>
-        <param name="position_kd">0.1</param>
-        <param name="position_i_max">1</param>
-        <command_interface name="position_pid"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-        <state_interface name="effort"/>
+      <xacro:robotiq_command_joint tf_prefix="${tf_prefix}"/>
 
+      <!-- <joint name="${tf_prefix}robotiq_85_left_knuckle_joint">
+        <xacro:unless value="${ros2_control_hardware_type == 'mujoco'}">
+          <param name="position_kp">3000</param>
+          <param name="position_ki">1</param>
+          <param name="position_kd">100</param>
+          <param name="position_i_max">10000</param>
+          <command_interface name="position_pid" />
+        </xacro:unless>
+        <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
+          <command_interface name="position" />
+        </xacro:if>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['robotiq_85_left_knuckle_joint']}</param>
+        </state_interface>
+        <state_interface name="velocity">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint>
+      <joint name="${tf_prefix}robotiq_85_right_knuckle_joint">
+        <param name="mimic">${tf_prefix}robotiq_85_left_knuckle_joint</param>
+        <xacro:unless value="${ros2_control_hardware_type == 'mujoco'}">
+          <param name="position_kp">3000</param>
+          <param name="position_ki">1</param>
+          <param name="position_kd">100</param>
+          <param name="position_i_max">10000</param>
+          <command_interface name="position_pid" />
+        </xacro:unless>
+        <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
+          <command_interface name="position" />
+        </xacro:if>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint>
+      <joint name="${tf_prefix}robotiq_85_left_inner_knuckle_joint">
+        <param name="mimic">${tf_prefix}robotiq_85_left_knuckle_joint</param>
+        <xacro:unless value="${ros2_control_hardware_type == 'mujoco'}">
+          <param name="position_kp">3000</param>
+          <param name="position_ki">1</param>
+          <param name="position_kd">100</param>
+          <param name="position_i_max">10000</param>
+          <command_interface name="position_pid" />
+        </xacro:unless>
+        <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
+          <command_interface name="position" />
+        </xacro:if>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint>
+
+      <joint name="${tf_prefix}robotiq_85_right_inner_knuckle_joint">
+        <param name="mimic">${tf_prefix}robotiq_85_left_knuckle_joint</param>
+        <xacro:unless value="${ros2_control_hardware_type == 'mujoco'}">
+          <param name="position_kp">3000</param>
+          <param name="position_ki">1</param>
+          <param name="position_kd">100</param>
+          <param name="position_i_max">10000</param>
+          <command_interface name="position_pid" />
+        </xacro:unless>
+        <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
+          <command_interface name="position" />
+        </xacro:if>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity">
+          <param name="initial_value">0.0</param>
+        </state_interface>
       </joint>
 
 
-      <xacro:configure_joint joint_name="${tf_prefix}robotiq_85_left_inner_knuckle_joint"
-        mimicing_joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="1" />
-      <xacro:configure_joint joint_name="${tf_prefix}robotiq_85_left_finger_tip_joint"
-        mimicing_joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="-1" />
-      <xacro:configure_joint joint_name="${tf_prefix}robotiq_85_right_knuckle_joint"
-        mimicing_joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="1" />
-      <xacro:configure_joint joint_name="${tf_prefix}robotiq_85_right_inner_knuckle_joint"
-        mimicing_joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="1" />
-      <xacro:configure_joint joint_name="${tf_prefix}robotiq_85_right_finger_tip_joint"
-        mimicing_joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="-1" />
+      <joint name="${tf_prefix}robotiq_85_right_finger_tip_joint">
+        <param name="mimic">${tf_prefix}robotiq_85_left_knuckle_joint</param>
+        <param name="multiplier">-1</param>
+        <xacro:unless value="${ros2_control_hardware_type == 'mujoco'}">
+          <param name="position_kp">3000</param>
+          <param name="position_ki">1</param>
+          <param name="position_kd">100</param>
+          <param name="position_i_max">10000</param>
+          <command_interface name="position_pid" />
+        </xacro:unless>
+        <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
+          <command_interface name="position" />
+        </xacro:if>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint>
 
 
+      <joint name="${tf_prefix}robotiq_85_left_finger_tip_joint">
+        <param name="mimic">${tf_prefix}robotiq_85_left_knuckle_joint</param>
+        <param name="multiplier">-1</param>
+        <xacro:unless value="${ros2_control_hardware_type == 'mujoco'}">
+          <param name="position_kp">3000</param>
+          <param name="position_ki">1</param>
+          <param name="position_kd">100</param>
+          <param name="position_i_max">10000</param>
+          <command_interface name="position_pid" />
+        </xacro:unless>
+        <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
+          <command_interface name="position" />
+        </xacro:if>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint> -->
 
 
     </ros2_control>

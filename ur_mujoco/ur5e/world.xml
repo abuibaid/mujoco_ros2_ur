@@ -1,6 +1,7 @@
 <mujoco model="ur5e scene">
 
   <statistic center="0.3 0 0.4" extent="0.8"/>
+  <option integrator="implicitfast"  gravity="0 0 -9.81"/>
 
   <visual>
     <headlight diffuse="0.6 0.6 0.6" ambient="0.1 0.1 0.1" specular="0 0 0"/>
@@ -16,13 +17,38 @@
 
     <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
     <material name="steel" texture="iron" shininess="0.9" specular="0.75" reflectance="0.3"/>
+
+
   </asset>
 
   <worldbody>
-    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <light pos="0 0 1.5" directional="true"/>
+    <body name="free_red_box" pos="0.2 0 0.97" >
+      <joint type="free" damping="1" armature="0.1"/>
+      <geom name="red_box" type="box" size=".03 .03 .03" pos="0 0 0" rgba="1 0 0 1"  friction="1.0 0.5 0.0001" solimp="0.99 0.99 0.01" solref="0.02 1"/> <!-- -->
+    </body>
+
+    <body name="free_green_box" pos="0.3 0.3 0.97" >
+      <joint type="free" damping="1" armature="0.1"/>
+      <geom name="green_box" type="box"  size=".03 .03 .03" pos="0 0 0" rgba="0 1 0 1" friction="1.0 0.5 0.0001" solimp="0.99 0.99 0.01" solref="0.02 1"/>  <!--   friction="1.0 0.5 0.0001" solimp="0.99 0.99 0.01" solref="0.02 1"-->
+    </body>
+    
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+
+    <!-- Static platform the robot base and cubes sit on (spans robot base + both cubes' footprint, floor to z=0.97) -->
+    <body name="robot_platform" pos="0.15 0.05 0">
+      <geom name="robot_platform_top" type="box" size="0.35 0.8 0.485" pos="0 0 0.485" material="steel"/>
+    </body>
+
+    <!-- Static camera mount: base cube + vertical post + cantilever arm up to the camera pose (0.23 0.46 2.06) -->
+    <body name="camera_stand" pos="0 0.69 0" euler="0 0 -1.57">
+      <geom name="camera_stand_base" type="box" size="0.12 0.12 0.075" pos="0.23 0.95 0.075" material="steel"/>
+      <geom name="camera_stand_post" type="box" size="0.04 0.04 1.05" pos="0.23 0.95 1.105" material="steel"/>
+      <geom name="camera_stand_arm" type="box" size="0.04 0.45 0.04" pos="0.23 0.605 2.13" material="steel"/>
+    </body>
+
   </worldbody>
 
     <include file="ur5e.xml"/>
-
+    <include file="d435i.xml"/>
 </mujoco>

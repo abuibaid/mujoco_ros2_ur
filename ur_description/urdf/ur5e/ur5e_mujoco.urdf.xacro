@@ -4,18 +4,22 @@
     <xacro:arg name="initial_positions_file" default="$(find mujoco_ros2_ur)/config/initial_positions.yaml" />
     <xacro:arg name="ros2_control_hardware_type" default="mujoco" />
     <xacro:arg name="tf_prefix" default="" />
+    <xacro:arg name="mujoco_model" default="$(find mujoco_ros2_ur)/ur_mujoco/ur5e/world.xml" />
 
 
     <link name="world" />
     <!-- Import ur5e urdf file -->
     <xacro:include filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/ur5e_macro.xacro" />
-    <xacro:ur5e name="ur5e" tf_prefix="$(arg tf_prefix)"  connected_to="world"  rpy="0 0 0"  xyz="0.0 0.0 0.1"/>
+    <xacro:ur5e name="ur5e" tf_prefix="$(arg tf_prefix)"  connected_to="world"  rpy="0 0 0"  xyz="0 -0.145 0.97"/>
 
     <!-- Import ur5e ros2_control description -->
-    <xacro:include filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/ur5e.ros2_control.xacro" />
     <xacro:include filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq.ros2_control.xacro" />
+    <xacro:include filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/ur5e.ros2_control.xacro" />
 
-    <xacro:ur5e_ros2_control name="UR5eFakeSystem" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)" tf_prefix="$(arg tf_prefix)"/>
-    <xacro:robotiq_ros2_control name="RobotiqFakeSystem" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)" tf_prefix="$(arg tf_prefix)"/>
+    <xacro:ur5e_ros2_control name="UR5eFakeSystem" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)" tf_prefix="$(arg tf_prefix)" mujoco_model="$(arg mujoco_model)" ft_sensor_name="motor_fts" ft_mujoco_sensor_name="motor" include_gripper="true" include_camera="true"/>
 
+
+    <!-- Import d435i/camera file -->
+    <xacro:include filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/d435i_macro.xacro" />
+    <xacro:d435i name="CameraFakeSystem" tf_prefix="$(arg tf_prefix)" connected_to="world" rpy="0 3.14159265 1.570796325" xyz="0.23 0.46 2.06" mujoco_model="$(arg mujoco_model)" include_ros2_control="false"/>
 </robot>

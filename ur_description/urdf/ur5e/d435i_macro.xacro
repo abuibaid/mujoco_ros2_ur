@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="d435i" params="name tf_prefix connected_to rpy xyz mujoco_model:='' include_ros2_control:=false">
+
+
+  <joint name="${tf_prefix}world_camera_joint" type="fixed">
+    <parent link="${connected_to}" />
+    <child link="${tf_prefix}camera_base" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <link name="${tf_prefix}camera_base" />
+
+  <link name="red_box">
+    <visual>
+      <origin xyz="0.2 0 0.97" rpy="0 0 0" />
+      <geometry>
+        <box size="0.03 0.03 0.03" />
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="red_box_joint" type="fixed">
+    <parent link="${tf_prefix}camera_base" />
+    <child link="red_box" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="green_box">
+    <visual>
+      <origin xyz="0.3 0.3 0.97" rpy="0 0 0" />
+      <geometry>
+        <box size="0.03 0.03 0.03" />
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="green_box_joint" type="fixed">
+    <parent link="${tf_prefix}camera_base" />
+    <child link="green_box" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="camera">
+    <visual>
+      <origin xyz="${xyz}" rpy="${rpy}" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="camera_joint" type="revolute">
+    <parent link="${tf_prefix}camera_base" />
+    <child link="camera" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.5236" upper="0.5236" effort="1" velocity="1" />
+  </joint>
+
+  <!--
+  Mujoco camera conventions have the z-frame pointed into the camera, whereas
+  ROS conventions expects the opposite. We adjust for that here.
+
+  https://mujoco.readthedocs.io/en/3.2.7/modeling.html#cameras
+  https://github.com/ros2/common_interfaces/blob/22012ae1f60903e100aca2765f17ad6a62e6777a/sensor_msgs/msg/Image.msg#L4
+  -->
+  <link name="camera_optical_frame" />
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera" />
+    <child link="camera_optical_frame" />
+    <origin xyz="0 0 0" rpy="3.14159 0 0" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <xacro:if value="${include_ros2_control}">
+    <ros2_control name="${name}" type="system">
+      <hardware>
+        <plugin>mujoco_ros2_control/MujocoSystemInterface</plugin>
+        <param name="mujoco_model">${mujoco_model}</param>
+      </hardware>
+      <joint name="camera_joint">
+        <param name="position_kp">20</param>
+        <param name="position_ki">0</param>
+        <param name="position_kd">1</param>
+        <param name="position_i_max">1</param>
+        <command_interface name="position" />
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+      </joint>
+    </ros2_control>
+  </xacro:if>
+
+  </xacro:macro>
+</robot>

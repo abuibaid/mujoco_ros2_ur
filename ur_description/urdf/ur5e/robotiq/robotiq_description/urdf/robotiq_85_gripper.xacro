@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+
+<robot name="robotiq_85_gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="/home/khalil/catkin_ws_mujoco/src/mujoco_robots/universal_robot/ur_description/urdf/robotiq/robotiq_description/urdf/robotiq_85_gripper.urdf.xacro" />
+  
+  
+ <!-- <link name="world"/> -->
+  <joint name="gripper_wrist_joint" type="fixed">
+    <origin xyz="0 0.001 0" rpy="${pi/2} ${pi/2} 0" />
+    <parent link="${prefix}ee_link"/>
+    <child link="gripper_root_link"/>
+  </joint>
+
+  <link name="gripper_root_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0 0 0"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0 0 0"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0" />
+      <origin xyz="0.0 0.0 0.0" />
+      <inertia ixx = "0.00000" ixy = "0.000000" ixz = "0.000000"
+           iyx = "0.000000" iyy = "0.00000" iyz = "0.000000"
+           izx = "0.000000" izy = "0.000000" izz = "0.00000" />
+    </inertial>
+  </link>
+  
+  <xacro:robotiq_85_gripper prefix="" parent="gripper_root_link" >
+    <origin xyz="0 0 0" rpy="0 0 ${pi/2}"/>
+  </xacro:robotiq_85_gripper>
+  
+</robot>

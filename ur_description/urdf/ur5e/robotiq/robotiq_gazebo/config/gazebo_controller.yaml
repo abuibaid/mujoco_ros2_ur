@@ -1,0 +1,51 @@
+ # Note: You MUST load these PID parameters for all joints that are using the
+# PositionJointInterface, otherwise the arm + gripper will act like a giant
+# parachute, counteracting gravity, and causing some of the wheels to lose
+# contact with the ground, so the robot won't be able to properly navigate. See
+# https://github.com/ros-simulation/gazebo_ros_pkgs/issues/612
+
+gazebo_ros_control: 
+  pid_gains: 
+    robotiq_85_left_finger_tip_joint: 
+      antiwindup: false
+      d: 0.0
+      i: 0.1
+      i_clamp: 0.2
+      p: 20.0
+      publish_state: true
+    robotiq_85_left_inner_knuckle_joint: 
+      antiwindup: false
+      d: 0.0
+      i: 0.1
+      i_clamp: 0.2
+      p: 20.0
+      publish_state: true
+    robotiq_85_left_knuckle_joint: 
+      antiwindup: false
+      d: 0.0
+      i: 0.1
+      i_clamp: 0.2
+      p: 20.0
+      publish_state: true
+    robotiq_85_right_finger_tip_joint: 
+      antiwindup: false
+      d: 0.0
+      i: 0.1
+      i_clamp: 0.2
+      p: 20.0
+      publish_state: true
+    robotiq_85_right_inner_knuckle_joint: 
+      antiwindup: false
+      d: 0.0
+      i: 0.1
+      i_clamp: 0.2
+      p: 20.0
+      publish_state: true
+    robotiq_85_right_knuckle_joint: 
+      antiwindup: false
+      d: 0.0
+      i: 0.1
+      i_clamp: 0.2
+      p: 20.0
+      publish_state: true
+

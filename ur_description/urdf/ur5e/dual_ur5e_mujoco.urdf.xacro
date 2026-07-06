@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding='utf-8'?>
+<robot name="ur5e" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:arg name="initial_positions_file" default="$(find mujoco_ros2_ur)/config/initial_positions.yaml" />
+    <xacro:arg name="ros2_control_hardware_type" default="mujoco" />
+    <xacro:arg name="tf_prefix" default="" />
+    <xacro:arg name="mujoco_model" default="$(find mujoco_ros2_ur)/ur_mujoco/ur5e/dual_world.xml" />
+
+
+    <link name="world" />
+    <!-- Import ur5e urdf file -->
+    <xacro:include filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/ur5e_macro.xacro" />
+    <!-- Import ur5e ros2_control description -->
+    <xacro:include filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/ur5e.ros2_control.xacro" />
+    <xacro:include filename="$(find mujoco_ros2_ur)/ur_description/urdf/ur5e/robotiq.ros2_control.xacro" />
+    
+
+    <!-- Robot1 -->
+    <xacro:ur5e name="ur5e_1" tf_prefix="robot1_"  connected_to="world"  rpy="0 0 0"  xyz="0 -0.145 0.97"/>
+    <xacro:ur5e_ros2_control name="UR5eFakeSystem_1" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)" tf_prefix="robot1_" mujoco_model="$(arg mujoco_model)" ft_sensor_name="robot1_ft_sensor" ft_mujoco_sensor_name="robot1_ft_sensor" include_gripper="true" include_camera="false"/>
+
+    <!-- Robot2 -->
+    <xacro:ur5e name="ur5e_2" tf_prefix="robot2_"  connected_to="world"  rpy="0 0 0"  xyz="0.4 -0.145 0.97"/>
+    <xacro:ur5e_ros2_control name="UR5eFakeSystem_2" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)" tf_prefix="robot2_" mujoco_model="$(arg mujoco_model)" ft_sensor_name="robot2_ft_sensor" ft_mujoco_sensor_name="robot2_ft_sensor" include_gripper="true" include_camera="false"/>
+</robot>

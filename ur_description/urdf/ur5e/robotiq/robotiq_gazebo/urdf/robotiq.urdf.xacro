@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find robotiq_description)/urdf/robotiq_85_gripper.urdf.xacro" />
+  
+       <gazebo> 
+          <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+           <robotNamespace>/</robotNamespace> 
+           <legacyModeNS>true</legacyModeNS> 
+          </plugin> 
+        </gazebo> 
+
+  <link name="world" />
+  
+  <!-- Attach the robotiq 85 gripper -->
+  <xacro:robotiq_85_gripper prefix="" parent="world" >
+    <origin xyz="0 0 0.004" rpy="0 ${-pi/2} ${pi}"/>
+  </xacro:robotiq_85_gripper> 
+  
+  <!-- Gazebo grasping plugin -->
+  <gazebo>
+    <gripper name="gazebo_gripper">
+      <grasp_check>
+        <attach_steps>2</attach_steps>    <!-- default: 20 -->
+        <detach_steps>2</detach_steps>    <!-- default: 40 -->
+        <min_contact_count>3</min_contact_count>
+      </grasp_check>
+      <gripper_link>robotiq_85_left_finger_tip_link</gripper_link>
+      <gripper_link>robotiq_85_right_finger_tip_link</gripper_link>
+      <palm_link>robotiq_85_base_link</palm_link>
+    </gripper>
+  </gazebo>
+  
+</robot>

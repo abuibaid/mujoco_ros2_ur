@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<launch>
+  <!-- Export env variable so that gazebo finds our models -->
+  
+  <arg name="limited" default="false"  doc="If true, limits joint range [-PI, PI] on all joints." />
+  <arg name="paused" default="true" doc="Starts gazebo in paused mode" />
+  <arg name="gui" default="true" doc="Starts gazebo gui" />
+  <arg name="debug"      default="false"/>
+
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="$(find robotiq_gazebo)/launch/eworld.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <!-- Send robot urdf to param server -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find robotiq_gazebo)/urdf/robotiq.urdf.xacro" />
+  <!-- Spawn robot in gazebo (and move it upwards):
+       better initial values should be -2.355 and 1.57 but the robot does
+       something strange when unpausing it
+  -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -z 0.0" output="screen" />
+
+  <!-- Controllers config -->
+ <!-- <rosparam file="$(find robotiq_gazebo)/config/robotiq_controllers.yaml"     command="load"/> -->
+  <rosparam file="$(find robotiq_gazebo)/config/joint_state_controller.yaml" command="load" />
+  <rosparam file="$(find robotiq_gazebo)/config/gripper_controller_robotiq.yaml" command="load" />
+  
+  <!-- Load gazebo controller configurations -->
+  <!-- Note: You MUST load these PID parameters for all joints that are using
+       the PositionJointInterface, otherwise the arm + gripper will act like a
+       giant parachute, counteracting gravity, and causing some of the wheels
+       to lose contact with the ground, so the robot won't be able to properly
+       navigate. See
+       https://github.com/ros-simulation/gazebo_ros_pkgs/issues/612 -->
+  <rosparam file="$(find robotiq_gazebo)/config/gazebo_controller.yaml" command="load" />
+
+  <!-- Load controllers -->
+  <arg if=      "$(arg debug)"  name="DEBUG" value="screen"/>
+  <arg unless = "$(arg debug)"  name="DEBUG" value="log"/>
+  <node name="robot_controllers" pkg="controller_manager" type="spawner"    output="$(arg DEBUG)"      args="joint_state_controller gripper_controller"/>
+  
+
+
+  <!-- Robot state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher"      name="robot_state_publisher" output="screen">   
+  <param name="publish_frequency"  type="double" value="50" />
+  </node>
+  
+  <node name="gui_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller" /> 
+
+</launch>

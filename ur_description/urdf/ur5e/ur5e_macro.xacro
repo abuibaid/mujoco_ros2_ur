@@ -552,7 +552,7 @@
       <origin xyz="0.04303 -0.03759940821 0.0" rpy="0.0 0.0 0.0" />
       <!-- 0.04303959807 -->
       <limit lower="-3.14" upper="3.14" velocity="100.0" effort="0.1" />
-      <mimic joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="-1" />
+      <mimic joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="-1"/> <!--multiplier="-1" -->
     </joint>
 
     <joint name="${tf_prefix}robotiq_85_right_finger_tip_joint" type="continuous">
@@ -562,7 +562,7 @@
       <origin rpy="0.0 0.0 0.0" xyz="0.04303 -0.03759940821  0.0" />
       <!-- 0.04303959807 -->
       <limit lower="-3.14" upper="3.14" velocity="100.0" effort="0.1" />
-      <mimic joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="-1" />
+      <mimic joint="${tf_prefix}robotiq_85_left_knuckle_joint" multiplier="-1" /> 
     </joint>
 
 
@@ -570,7 +570,7 @@
       <visual>
         <geometry>
           <mesh
-            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_tip_link.dae" />
+            filename="package://mujoco_ros2_ur/ur_description/urdf/ur5e/robotiq/robotiq_description/meshes/visual/robotiq_85_finger_tip_link.dae" />
         </geometry>
       </visual>
       <collision>
